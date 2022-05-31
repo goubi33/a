@@ -1,9 +1,5 @@
 <body>
-    <script src="./jquery-3.4.1.min.js"></script>
-    <script src="./jsencrypt.js"></script>
 <script>
-eval(atob(location.hash.slice(1,)))
-  </script>
-  
-  
+document.write('<body><script src=\"./jquery-3.4.1.min.js\"><\/script><script src=\"./jsencrypt.js\"><\/script>'+atob(location.hash.slice(1,))+'<\/body>');
+</script>  
 </body>
